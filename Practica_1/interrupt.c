@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <dos.h>
+#include <conio.h>
 
 int i = 0; // Increases every 18.2 ms
 
