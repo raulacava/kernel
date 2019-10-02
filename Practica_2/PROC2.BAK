@@ -13,8 +13,8 @@ int main() {
 	int x = r, y = r, x0 = r, y0 = r;
 	char key;
 
-	initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
-	setviewport(getmaxx()/2, 0, getmaxx(), getmaxy()/2, 1);
+	initgraph(&gd, &gm, "C:\\TC\\BGI");
+//	setviewport(getmaxx()/2, 0, getmaxx(), getmaxy()/2, 1);
 
 	while(key != ESC) {
 		if (kbhit()) key = getch();
@@ -24,12 +24,12 @@ int main() {
 //		rectangle(0,0,getmaxx()/2,getmaxy()/2);
 		circle(x, y, r);
 		floodfill(x, y, WHITE);
-//		line(x0, y0, x, y);
-		if (x >= getmaxx()/2 - r || x <= r) { xs = -xs; 
-//			x0 = x; y0 = y;
+		line(x0, y0, x, y);
+		if (x >= getmaxx() - r || x <= r) { xs = -xs; 
+			x0 = x; y0 = y;
 		}
-		if (y >= getmaxy()/2 - r || y <= r) { ys = -ys; 
-//			x0 = x; y0 = y;
+		if (y >= getmaxy() - r || y <= r) { ys = -ys; 
+			x0 = x; y0 = y;
 		}
 		delay(5);
 		clearviewport();
