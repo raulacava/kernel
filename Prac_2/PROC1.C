@@ -1,16 +1,15 @@
 /* Proceso 1
  * El Editor
  */
-#include <graphics.h>
 #include <conio.h>
+#include <dos.h>
 
 #define ESC 27
 
 int main() {
-	int n;
-	char key;
 	struct text_info initial_info;
-	int xo, yo;
+	int x, y, xo, yo;
+	char key;
 	int p = 1;
 
 	gettextinfo(&initial_info);
@@ -18,14 +17,20 @@ int main() {
 	yo = p == 1 || p == 2 ? 0 : initial_info.screenheight/2;
 
 //	clrscr();
-	gotoxy(xo + 1, n = yo + 1);
+	x = xo + 1;
+	y = yo + 1;
 	while (key != ESC) {
 		key = getch();
+//		disable();
+		gotoxy(x, y);
 		putch(key);
-		if (wherex() >= xo + initial_info.screenwidth/2)
-			if (wherey() >= yo + initial_info.screenheight/2)
-				gotoxy(xo + 1, n = yo + 1);
-			else gotoxy(xo + 1, ++n);
+//		enable();
+		if (x++ >= xo + initial_info.screenwidth/2) {
+			x = xo + 1;
+			if (y++ >= yo + initial_info.screenheight/2) {
+				y = yo + 1;
+			}
+		}
 	}
 	return 0;
 }

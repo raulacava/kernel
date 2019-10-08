@@ -431,27 +431,31 @@ void mostrar()
 /******************************************************************************/
 
 void proc1() {
-	int n;
+	int x, y;
 	char key;
 	struct text_info initial_info;
 	int xo, yo;
 	int p = 1;
 
 	gettextinfo(&initial_info);
-	xo = p == 1 || p == 3 ? 0 : initial_info.screenwidth /2;
-	yo = p == 1 || p == 2 ? 0 : initial_info.screenheight/2;
+	xo = (p == 1 || p == 3) ? 0 : initial_info.screenwidth /2;
+	yo = (p == 1 || p == 2) ? 0 : initial_info.screenheight/2;
 
 //	clrscr();
-	gotoxy(xo + 1, n = yo + 1);
+	x = xo + 1;
+	y = yo + 1;
 	while (key != ESC) {
-		disable();
 		key = getch();
+		disable();
+		gotoxy(x, y);
 		putch(key);
 		enable();
-		if (wherex() >= xo + initial_info.screenwidth/2)
-			if (wherey() >= yo + initial_info.screenheight/2)
-				gotoxy(xo + 1, n = yo + 1);
-			else gotoxy(xo + 1, ++n);
+		if (x++ >= xo + initial_info.screenwidth/2) {
+			x = xo + 1;
+			if (y++ >= yo + initial_info.screenheight/2) {
+				y = yo + 1;
+			}
+		}
 	}
 }
 

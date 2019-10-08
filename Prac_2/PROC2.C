@@ -1,5 +1,5 @@
-/* Proceso 1
- * La Bolita
+/* Proceso 2
+ * La Pelotita
  */
 #include <dos.h>
 #include <conio.h>
@@ -7,11 +7,10 @@
 #define ESC 27
 
 int main() {
-	int x, y;
-	int xs = 1, ys = 1;
-	char key = 'o';
 	struct text_info initial_info;
-	int xo, yo;
+	int x, y, xo, yo;
+	char key = 'o';
+	int xs = 1, ys = 1;
 	int p = 2;
 
 	gettextinfo(&initial_info);
@@ -24,16 +23,16 @@ int main() {
 //	clrscr();
 	while (key != ESC) {
 		if (kbhit()) key = getch();
-		disable();
+//		disable();
 		gotoxy(x, y);
 		putch('o');
 		gotoxy(xo + 1, yo + 1);
-		enable();
+//		enable();
 		delay(100);
-		disable();
+//		disable();
 		gotoxy(x, y);
 		putch(' ');
-		enable();
+//		enable();
 		x += xs;
 		y += ys;
 		if (x >= xo + initial_info.screenwidth /2 || x <= xo + 1) xs = -xs;
