@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <graphics.h>
+#include <stdlib.h>
+
+#define ESC 27
 
 #define CLK_INT		0x08	/* vector de interrupcion del reloj */
 
@@ -193,13 +196,13 @@ void process1()
 	time_t now;
 	struct tm *tm_p;
 	int prev_secs = 999;
-
+	char key;
 	disable();
 	gotoxy(45, 6);
-	printf("this is your PC's clock");
+	printf("TIMER");
 	enable();
 
-	while (1) {
+	while (key != ESC) {
 		now = time(NULL);
 		tm_p = localtime(&now);
 
@@ -208,8 +211,8 @@ void process1()
 		if (prev_secs != tm_p->tm_sec) {
 
 			disable();
-			gotoxy(45, 7);
-			printf("the time is: %.2i:%.2i:%.2i", tm_p->tm_hour, tm_p->tm_min, tm_p->tm_sec);
+			gotoxy(45, 8);
+			printf("La hora es: %.2i:%.2i:%.2i", tm_p->tm_hour, tm_p->tm_min, tm_p->tm_sec);
 			enable();
 
 			prev_secs = tm_p->tm_sec;
@@ -220,78 +223,63 @@ void process1()
 
 void process2()
 {
-	int msg_g_iActualProcess = 0, prev_secs = 999;
-	char *messages[] = { "have a nice day      ", "be happy             ", "don't forget to smile" };
 
-	disable();
-	gotoxy(45, 18);
-	printf("here's a message for you");
-	enable();
-
+	int a, b, c;
 	int x, y;
- 
-	while (1) {
+	char key;
 
-		/* cambia de mensaje cada 3 segundos */
-		if (prev_secs != g_iSeconds && !(g_iSeconds % 3)) {
+	gotoxy(45, 18);
+	printf("NUMEROS ALEATORIOS");
 
-			disable();
-			gotoxy(45, 19);
-			printf("message: %s", messages[msg_g_iActualProcess]);
-			enable();
-
-			msg_g_iActualProcess = (msg_g_iActualProcess + 1) % 3;
-
-			prev_secs = g_iSeconds;
-		}
-		sleep(1);
+//	clrscr();
+	while (key != ESC) {
+		if (kbhit()) key = getch();
+		//genera un numero aleatorio
+		a = (int)((rand()/32767.1)*100);
+		b = 20+(int)((rand()/3276.1)*11);
+		c = 30+(int)((rand()/3276.1)*22);
+		disable();
+		gotoxy(45, 19);
+		printf("Numero: %3d", a);
+		gotoxy(45, 20);
+		printf("Numero: %3d", b);
+		gotoxy(45, 21);
+		printf("Numero: %3d", c);
+		enable();
+		delay(100);
 	}
 }
 
 void process3()
 {
-	int c, curr_x, curr_y;
-	curr_x = LEFT_X;
-	curr_y = MIDDLE_Y + 1;
-	
-	while (1) 
-	{
-		g_iLastX = curr_x;
-		g_iLastY = curr_y;
-		c = getch();
-		if( c != BACKSPACE && c != ENTER )
-		{ 
-			disable();
-		gotoxy(curr_x, curr_y);
-			curr_x++;
-			printf("%c", c);
-			enable();
-		}
-		/* si se alcanzo el final del cuadrante, retorna al inicio de la siguiente linea */
-		if( c == BACKSPACE )
-		{
-			if( curr_x > LEFT_X )
-			{
-				disable();
-				printf(" ");
-				curr_x--;
-				enable();
-			}
-			else if( curr_y > MIDDLE_Y + 1)
-			{
-				curr_x = MIDDLE_X;
-				curr_y--;
+	int x, y;
+	char key;
+	struct text_info initial_info;
+	int xo, yo;
+	int p = 3;
+
+	gettextinfo(&initial_info);
+	xo = (p == 1 || p == 3) ? 0 : initial_info.screenwidth /2;
+	yo = (p == 1 || p == 2) ? 0 : initial_info.screenheight/2;
+
+//	clrscr();
+	x = xo + 1;
+	y = yo + 1;
+	while (key != ESC) {
+		key = getch();
+		disable();
+		gotoxy(x, y);
+		putch(key);
+		enable();
+		if (x++ >= xo + initial_info.screenwidth/2) {
+			x = xo + 1;
+			if (y++ >= yo + initial_info.screenheight/2) {
+				y = yo + 1;
 			}
 		}
-		else if ( curr_x >= MIDDLE_X || c == ENTER ) 
-		{
-			curr_x = LEFT_X;
-			curr_y++;
-			if( curr_y > BOTTOM_Y )
-				curr_y = MIDDLE_Y + 1;
-		}
-		
 	}
+
+
 }
 
 void process4()

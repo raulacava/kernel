@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <graphics.h>
+#include <stdlib.h>
+
+#define ESC 27
 
 #define CLK_INT		0x08	/* vector de interrupcion del reloj */
 
@@ -193,13 +196,13 @@ void process1()
 	time_t now;
 	struct tm *tm_p;
 	int prev_secs = 999;
-
+	char key;
 	disable();
 	gotoxy(45, 6);
-	printf("this is your PC's clock");
+	printf("TIMER");
 	enable();
 
-	while (1) {
+	while (key != ESC) {
 		now = time(NULL);
 		tm_p = localtime(&now);
 
@@ -208,8 +211,8 @@ void process1()
 		if (prev_secs != tm_p->tm_sec) {
 
 			disable();
-			gotoxy(45, 7);
-			printf("the time is: %.2i:%.2i:%.2i", tm_p->tm_hour, tm_p->tm_min, tm_p->tm_sec);
+			gotoxy(45, 8);
+			printf("La hora es: %.2i:%.2i:%.2i", tm_p->tm_hour, tm_p->tm_min, tm_p->tm_sec);
 			enable();
 
 			prev_secs = tm_p->tm_sec;
@@ -221,83 +224,104 @@ void process1()
 void process2()
 {
 	int msg_g_iActualProcess = 0, prev_secs = 999;
-	char *messages[] = { "have a nice day      ", "be happy             ", "don't forget to smile" };
-
-	disable();
-	gotoxy(45, 18);
-	printf("here's a message for you");
-	enable();
-
+	int a, b, c;
 	int x, y;
- 
-	while (1) {
+	char key;
 
-		/* cambia de mensaje cada 3 segundos */
-		if (prev_secs != g_iSeconds && !(g_iSeconds % 3)) {
+	gotoxy(45, 18);
+	printf("NUMEROS ALEATORIOS");
 
-			disable();
-			gotoxy(45, 19);
-			printf("message: %s", messages[msg_g_iActualProcess]);
-			enable();
-
-			msg_g_iActualProcess = (msg_g_iActualProcess + 1) % 3;
-
-			prev_secs = g_iSeconds;
+//	clrscr();
+	while (key!= ESC) {
+	if (kbhit()) key = getch();
+		if (prev_secs != g_iSeconds && !(g_iSeconds % 3)){
+		//genera un numero aleatorio
+		disable();
+		a = (int)((rand()/32767.1)*100);
+		b = 20+(int)((rand()/3276.1)*11);
+		c = 30+(int)((rand()/3276.1)*22);
+		gotoxy(45, 20);
+		printf("Numero: %3d", a);
+		gotoxy(45, 22);
+		printf("Numero: %3d", b);
+		gotoxy(45, 24);
+		printf("Numero: %3d", c);
+		enable();
+		msg_g_iActualProcess = (msg_g_iActualProcess + 1) % 3;
+		prev_secs = g_iSeconds;
 		}
-		sleep(1);
+		delay(100);
 	}
 }
 
 void process3()
 {
+	char key;
+	int x, y;
 	int c, curr_x, curr_y;
 	curr_x = LEFT_X;
 	curr_y = MIDDLE_Y + 1;
+	x = 1;
+	y = 16;
 	
-	while (1) 
-	{
-		g_iLastX = curr_x;
-		g_iLastY = curr_y;
-		c = getch();
-		if( c != BACKSPACE && c != ENTER )
-		{ 
-			disable();
-		gotoxy(curr_x, curr_y);
-			curr_x++;
-			printf("%c", c);
-			enable();
-		}
-		/* si se alcanzo el final del cuadrante, retorna al inicio de la siguiente linea */
-		if( c == BACKSPACE )
-		{
-			if( curr_x > LEFT_X )
-			{
-				disable();
-				printf(" ");
-				curr_x--;
-				enable();
-			}
-			else if( curr_y > MIDDLE_Y + 1)
-			{
-				curr_x = MIDDLE_X;
-				curr_y--;
+//	clrscr();
+	while (key != ESC) {
+		key = getch();
+		disable();
+		gotoxy(x, y);
+		printf("%d", x);
+		enable();
+		if (x++ >= 40) {
+			x = 1;
+			if (y++ >= 30) {
+				y = 16;
 			}
 		}
-		else if ( curr_x >= MIDDLE_X || c == ENTER ) 
-		{
-			curr_x = LEFT_X;
-			curr_y++;
-			if( curr_y > BOTTOM_Y )
-				curr_y = MIDDLE_Y + 1;
-		}
-		
+
+
+
+
+		// g_iLastX = curr_x;
+		// g_iLastY = curr_y;
+		// c = getch();
+		// if( c != BACKSPACE && c != ENTER )
+		// { 
+		// 	disable();
+		// 	gotoxy(curr_x, curr_y);
+		// 	printf("%c", c);
+		// 	enable();
+		// 	curr_x++;
+		// }
+		// /* si se alcanzo el final del cuadrante, retorna al inicio de la siguiente linea */
+		// if( c == BACKSPACE )
+		// {
+		// 	if( curr_x > LEFT_X )
+		// 	{
+		// 		disable();
+		// 		printf(" ");
+		// 		curr_x--;
+		// 		enable();
+		// 	}
+		// 	else if( curr_y > MIDDLE_Y + 1)
+		// 	{
+		// 		curr_x = MIDDLE_X;
+		// 		curr_y--;
+		// 	}
+		// }
+		// else if ( curr_x >= MIDDLE_X || c == ENTER ) 
+		// {
+		// 	curr_x = LEFT_X;
+		// 	curr_y++;
+		// 	if( curr_y > BOTTOM_Y )
+		// 		curr_y = MIDDLE_Y + 1;
+		// }
 	}
 }
 
 void process4()
 {
 	typedef enum { RIGHT, LEFT, DOWN, UP } direction;
-
+	char key;
 	int prev_x, prev_y, curr_x, curr_y;
 	direction dir_x, dir_y;
 
@@ -305,7 +329,7 @@ void process4()
 	dir_x = RIGHT;
 	dir_y = DOWN;
 
-	while (1) 
+	while (key != ESC) 
 	{
 		/* borra la anterior posicion de la pelota */
 		disable();
