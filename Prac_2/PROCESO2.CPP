@@ -5,34 +5,30 @@
 #include <graphics.h>
 #include <stdlib.h>
 
-#define ESC 27
+#define ESC        27
+#define CLK_INT    0x08	// vector de interrupcion del reloj
+#define STACK_SIZE 1024	// capacidad maxima de la pila de los procesos
+#define LEFT_X     1
+#define MIDDLE_X   40
+#define RIGHT_X    80
+#define TOP_Y      1
+#define BOTTOM_Y   30
+#define MIDDLE_Y   (BOTTOM_Y+1)/2
+#define ENTER      '\r'
+#define BACKSPACE  '\b'
 
-#define CLK_INT		0x08	/* vector de interrupcion del reloj */
+typedef enum {
+	READY,
+	RUNNING
+} process_states;
 
-#define STACK_SIZE	1024	/* capacidad maxima de la pila de los procesos */
-
-#define LEFT_X		1
-#define MIDDLE_X	40
-#define RIGHT_X		80
-
-#define TOP_Y		1
-#define BOTTOM_Y	30
-#define MIDDLE_Y	(BOTTOM_Y+1)/2
-
-#define ENTER '\r'
-#define BACKSPACE '\b'
-
-typedef enum { READY, RUNNING } process_states;
-
-typedef struct 
-{
+typedef struct {
 	unsigned bp, di, si, ds, es;
 	unsigned dx, cx, bx, ax;
 	unsigned ip, cs, flags;
 } context;
 
-typedef struct pcb 
-{
+typedef struct pcb {
 	unsigned int id;
 	process_states state;
 	unsigned ss;
@@ -46,66 +42,58 @@ struct Ptask {
     unsigned Este;
     void (*Tarea)();
 };
+
 typedef struct Ptask Task;
 typedef void (*TareaPtr)();
-/* variables globales */
 
+// variables globales
 pcb pcbs[10];
-int g_iActualProcess, g_iNumProcesses, g_iTicks, g_iSeconds, g_bFirstRun;
-int g_head =0, g_tail = -1; //indices de la cola de procesos
 Task Run;//Variable tipo tarea para saber que tarea esta ejecutandose
 Task *PtrRun = &Run;
+int g_iActualProcess, g_iNumProcesses, g_iTicks, g_iSeconds, g_bFirstRun;
+int g_head = 0, g_tail = -1; //indices de la cola de procesos
 int Cola_Procesos[10]; //Cola de 10 procesos
 int g_iLastX, g_iLastY;
 
 void interrupt (*old_clock)(...);
-
 void interrupt context_switch(...);
 void fnInitFrame();
 void fnUninitializeFrame( );
-
 void process1();
 void process2();
 void process3();
 void process4();
-
 void init_process(void (*process)(void), unsigned int id);
-
 void add_to_queue(int id);
 Task *PrimeraTarea();
 void InsertaListos(Task *Tarea);
 void mostrar();
 
-int main()
-{
-	g_iLastY = g_iLastX = 0;
-	/* limpia la pantalla */
-	int bContinuerWhile = 1;
-	clrscr();
-
+int main() {
 	/* inicializa variables globales */
-
 	g_iActualProcess = g_iNumProcesses = g_iTicks = g_iSeconds = 0;
 	g_bFirstRun = 1;
+	g_iLastY = g_iLastX = 0;
+	g_iActualProcess = 0;
+
+	int bContinuerWhile = 1;
+
+	/* limpia la pantalla */
+	clrscr();
 
 	/* divide la pantalla en 4 cuadrantes */
 	fnInitFrame( );
 
 	/* inicializa procesos */
-
 	init_process(&process1, 1);
 	init_process(&process2, 2);
 	init_process(&process3, 3);
 	init_process(&process4, 4);
 
-	g_iActualProcess = 0;
-
 	/* almacena la antigua rutina de interrupcion */
-
 	old_clock = getvect(CLK_INT);
 
 	/* instala la nueva rutina de interrupcion */
-
 	setvect(CLK_INT, context_switch);
 
 	/* comienza ejecucion del 1er proceso en la fila */
