@@ -101,20 +101,77 @@ int main() {
 	while(bContinuerWhile);
 
 	/* restaura la antigua rutina de interrupcion */
-
 	setvect(CLK_INT, old_clock);
 
 	/* espera a que el usuario presione una tecla para salir */
-
 	printf("press any key to continue\n");
 	getch();
 	fnUninitializeFrame( );
 	return 0;
 }
 
-/* rutina de servicio de interrupcion para el reloj */
-void interrupt context_switch(...)
-{
+/******************************************************************************/
+void fnInitFrame() {
+	int gd = DETECT, gm;
+
+	initgraph( &gd, &gm, "C:\\TURBOC3\\BGI");
+
+	//get the width and height of the window.
+	int iWinSizeX = getmaxx();
+	int iWinSizeY = getmaxy();
+
+	//Move the cursor to draw a horizontal line.
+	moveto( 0,			iWinSizeY/2 );
+	lineto( iWinSizeX,	iWinSizeY/2 );
+
+	//Move the cursor to draw a vertical line.
+	moveto( iWinSizeX/2,	0 );
+	lineto( iWinSizeX/2,	iWinSizeY );
+}
+
+/******************************************************************************/
+void init_process(TareaPtr Tarea, unsigned id) {
+	/* utiliza un apuntador para poder referenciar los registros en la pila por su nombre */
+	context *cntxt_ptr;
+	cntxt_ptr = (context *)pcbs[id].stack + STACK_SIZE - sizeof(context);
+
+	/* inicializa el PCB del proceso */
+	pcbs[id].id = id;
+	pcbs[id].state = READY;
+	pcbs[id].next = FP_SEG(Tarea);
+	pcbs[id].prev = FP_OFF(Tarea);
+	pcbs[id].ss = FP_SEG((context far *) cntxt_ptr);
+	pcbs[id].sp = FP_OFF((context far *) cntxt_ptr);
+
+	/* inicializa los registros de la pila */
+	cntxt_ptr->bp = 0;
+	cntxt_ptr->di = 0;
+	cntxt_ptr->si = 0;
+	cntxt_ptr->ds = _DS;
+	cntxt_ptr->es = _ES;
+	cntxt_ptr->dx = 0;
+	cntxt_ptr->cx = 0;
+	cntxt_ptr->bx = 0;
+	cntxt_ptr->ax = 0;
+	cntxt_ptr->cs = FP_SEG(Tarea);
+	cntxt_ptr->ip = FP_OFF(Tarea);
+	cntxt_ptr->flags = 0x200;
+
+	add_to_queue(id);
+
+	/* incrementa el numero de procesos y el apuntador al siguiente proceso */
+	g_iNumProcesses++;
+	g_iActualProcess++;
+}
+
+/******************************************************************************/
+void add_to_queue(int id) {
+	g_tail++;
+	Cola_Procesos[g_tail] = id;
+}
+
+/************** rutina de servicio de interrupcion para el reloj **************/
+void interrupt context_switch() {
 	disable();
 
 	// if (!g_bFirstRun) {
@@ -154,25 +211,6 @@ void interrupt context_switch(...)
 
 /* rutina de servicio de interrupcion para el teclado */
 
-void fnInitFrame()
-{
-	///*
-	int gd = DETECT, gm;
-	initgraph( &gd, &gm, "C:\\TURBOC3\\BGI");
-	//get the width of the window.
-	int iWinSizeX = getmaxx();
-	//get the height of the window.
-	int iWinSizeY = getmaxy();
-
-	//Move the cursor to draw a horizontal line.
-	moveto( 0,			iWinSizeY/2 );
-	lineto( iWinSizeX,	iWinSizeY/2 );
-
-	//Move the cursor to draw a vertical line.
-	moveto( iWinSizeX/2,	0 );
-	lineto( iWinSizeX/2,	iWinSizeY );
-	//*/
-}
 
 void fnUninitializeFrame()
 {
@@ -353,49 +391,7 @@ void process4()
     }
 }
 
-void init_process(TareaPtr Tarea, unsigned id)
-{
-	/* utiliza un apuntador para poder referenciar los registros en la pila por su nombre */
 
-	context *cntxt_ptr;
-	cntxt_ptr = (context *)pcbs[id].stack + STACK_SIZE - sizeof(context);
-
-	/* inicializa el PCB del proceso */
-
-	pcbs[id].id = id;
-	pcbs[id].state = READY;
-	pcbs[id].next = FP_SEG(Tarea);
-    pcbs[id].prev = FP_OFF(Tarea);
-	pcbs[id].ss = FP_SEG((context far *) cntxt_ptr);
-	pcbs[id].sp = FP_OFF((context far *) cntxt_ptr);
-
-	/* inicializa los registros de la pila */
-
-	cntxt_ptr->bp = 0;
-	cntxt_ptr->di = 0;
-	cntxt_ptr->si = 0;
-	cntxt_ptr->ds = _DS;
-	cntxt_ptr->es = _ES;
-	cntxt_ptr->dx = 0;
-	cntxt_ptr->cx = 0;
-	cntxt_ptr->bx = 0;
-	cntxt_ptr->ax = 0;
-	cntxt_ptr->cs = FP_SEG(Tarea);
-	cntxt_ptr->ip = FP_OFF(Tarea);
-	cntxt_ptr->flags = 0x200;
-
-	/* incrementa el numero de procesos y el apuntador al siguiente proceso */
-
-	add_to_queue(id);
-
-	g_iNumProcesses++;
-	g_iActualProcess++;
-}
-
-void add_to_queue(int id) {
-    g_tail++;
-    Cola_Procesos[g_tail] = id;
-}
 
 Task *PrimeraTarea() {
     int aux, i;
