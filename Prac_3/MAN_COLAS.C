@@ -1,3 +1,5 @@
+//#include <DATOS.H>
+
 void add_to_queue(int id) {
 	g_tail++;
 	Cola_Procesos[g_tail] = id;

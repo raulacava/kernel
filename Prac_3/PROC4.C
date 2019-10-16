@@ -1,3 +1,9 @@
+#include <CONIO.H>
+#include <STDIO.H>
+#include <DOS.H>
+
+#define ESC 27
+
 void proc4() {
 	struct text_info initial_info;
 	struct time now;

@@ -1,3 +1,5 @@
+//#include <DATOS.H>
+
 void init_process(TareaPtr Tarea, unsigned id) {
 	context *cntxt_ptr;
 	cntxt_ptr = (context *)pcbs[id].stack + STACK_SIZE - sizeof(context);

@@ -1,4 +1,4 @@
-#define CLK_INT    0x08 // Vector de Interrupcion
+//#include <DATOS.H>
 
 void interrupt context_switch() {
 	disable();

@@ -1,3 +1,8 @@
+#include <CONIO.H>
+#include <DOS.H>
+
+#define ESC 27
+
 void proc1() {
 	int x, y;
 	char key;

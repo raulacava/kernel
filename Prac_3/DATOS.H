@@ -1,8 +1,14 @@
 #ifndef DATOS_H
 #define DATOS_H
 
+#include <dos.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #define ESC        27   // Tecla de salida
 #define STACK_SIZE 1024 // Capacidad Maxima de la Pila de Procesos
+#define CLK_INT    0x08 // Vector de Interrupcion
 
 typedef enum {
 	READY, 
@@ -37,10 +43,16 @@ typedef void (*TareaPtr)();
 pcb pcbs[10];
 Task Run;                   // Variable tipo tarea para saber que tarea esta ejecutandose
 Task *PtrRun = &Run;
-int g_iActualProcess, g_iNumProcesses, g_iTicks, g_iSeconds, g_bFirstRun;
-int g_head =0, g_tail = -1; // indices de la cola de procesos
+int g_iActualProcess;
+int g_iNumProcesses;
+int g_iTicks;
+int g_iSeconds;
+int g_bFirstRun;
+int g_head;
+int g_tail; // indices de la cola de procesos
 int Cola_Procesos[10];      // Cola de 10 procesos
-int g_iLastX, g_iLastY;
+int g_iLastX;
+int g_iLastY;
 
 void interrupt (*old_clock)();
 void interrupt context_switch();

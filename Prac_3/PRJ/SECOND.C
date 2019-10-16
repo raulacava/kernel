@@ -1,4 +1,5 @@
 /* second.c */
+#include <CERO.H>
 int isStrong(int n) {
 	int temp;
 	long s;
