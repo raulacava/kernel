@@ -1,6 +1,7 @@
-//#include <SUMA.H>
+#include "SUMA.H"
 
-int suma(int a, int b) {
+int suma(int x, int y) {
+	a = x + x;
+	b = y + y;
 	return a + b;
 }
-

@@ -1,7 +1,4 @@
-#ifndef SUMA_H
-#define SUMA_H
+extern int a;
+extern int b;
 
-int suma(int a, int b);
-
-#endif
-
+int suma(int, int);
