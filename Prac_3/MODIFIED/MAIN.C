@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "MAIN.H"
 #include "INIT.H"
-#include "MAN_CPU.H"
+//#include "MAN_CPU.H"
 #include "DATOS.H"
 
 pcb pcbs[10];
@@ -60,7 +60,7 @@ void InsertaListos(Task *Tarea) {
 	add_to_queue(Tarea->Este);
 }
 
-/*void interrupt context_switch() {
+void interrupt context_switch() {
 	disable();
 
 	pcbs[PtrRun->Este].ss = _SS;
@@ -81,7 +81,7 @@ void InsertaListos(Task *Tarea) {
 	gotoxy(g_iLastX,g_iLastY);
 	old_clock();
 	enable();
-}*/
+}
 
 /*void init_process(TareaPtr Tarea, unsigned id) {
 	context *cntxt_ptr;
