@@ -7,9 +7,9 @@ There are still several functions to implement.
 
 ## .C Files
 - [ ] MAN_COLAS.C
-  - [ ] meter_colas_listos(ID);
-  - [ ] sacar_colas_listos(ID_POS);
-  - [ ] primero_colas_listos();
+  - [x] meter_colas_listos(ID);
+  - [x] sacar_colas_listos(ID_POS);
+  - [x] primero_colas_listos();
 - [ ] MAN_CPU.C
   - [ ] cambio_contexto();
     - [ ] push(ID_POS); // From Regs to Stack (_SS & _SP)
@@ -17,19 +17,21 @@ There are still several functions to implement.
     - [ ] push(PCL); // From Stack to Regs (_SS & _SP)
     - [x] *old_clock();* // Original
 - [ ] INIT.C
+  - [x] old_clock();
   - [x] init_sistema();
     - [x] *old_clock();* // Original interrupt
-    - [x] getvect();
-    - [x] setvect();
+    - [x] *getvect();*
+    - [x] *setvect();*
+  - [ ] init_pcb(funcion, ID);
   - [ ] activa(funcion, ID);
-    - [ ] init_pcb(funcion, ID);
+    - [ ] *init_pcb(funcion, ID);*
     - [ ] *meter_colas_listos(ID);*
     - [ ] *cambio_contexto();*
   - [ ] elimina();
     - [ ] *sacar_colas_listos(ID_POS);*
     - [ ] *cambio_contexto();*
   - [x] term_sistema();
-    - [x] setvect();
+    - [x] *setvect();*
 - [ ] PROCESO0.C
   - [ ] proceso0();
     - [ ] *activa(funcion, ID);* // proc1, 1
@@ -39,7 +41,7 @@ There are still several functions to implement.
     - [ ] *elimina();* // proceso0
 - [ ] MAIN.C
   - [x] *init_sistema();*
-  - [ ] proceso0();
+  - [ ] *proceso0();*
   - [ ] while(1);
   - [x] *term_sistema();*
 
