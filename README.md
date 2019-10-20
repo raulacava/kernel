@@ -31,7 +31,7 @@ There are still several functions to implement.
   - [x] term_sistema();
     - [x] setvect();
 - [ ] PROCESO0.C
-  - proceso0();
+  - [ ] proceso0();
     - [ ] *activa(funcion, ID);* // proc1, 1
     - [ ] *activa(funcion, ID);* // proc2, 2
     - [ ] *activa(funcion, ID);* // proc3, 3
