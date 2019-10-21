@@ -2,15 +2,16 @@
 #include "colas.h"
 
 void lista_ciclada() {
-//	indice = -1;
-	for (int i = 0; i < 27; i++) {
+	int i;
+	for (i = 0; i < 20; i++) {
 		printf("%d ", primero_cola_listos()+1);
 	}
 }
 
 void mostrar() {
+	int i;
 	printf("%d - ", total);
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		printf("%d ", cola[i]);
 	}
 	if (total != 0) {

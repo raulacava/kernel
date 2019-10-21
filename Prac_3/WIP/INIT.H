@@ -13,13 +13,13 @@ typedef enum {
 } process_states;
 
 typedef struct {
-	unsigned int id;
+	unsigned int   id;
 	process_states state;
-	unsigned ss;
-	unsigned sp;
-	char stack[STACK_SIZE];
-	unsigned next;
-	unsigned prev;
+	unsigned       ss;
+	unsigned       sp;
+	char           stack[STACK_SIZE];
+	unsigned       next;
+	unsigned       prev;
 } pcb;
 
 typedef void (*TareaPtr)();

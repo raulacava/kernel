@@ -9,7 +9,8 @@ void meter_cola_listos(int id) {
 }
 
 void sacar_cola_listos(int id) {
-	for (int i = 0; i < total; i++) {
+	int i;
+	for (i = 0; i < total; i++) {
 		if (cola[i] == id) {
 			cola[i] = cola[i+1];
 			id = cola[i+1];
