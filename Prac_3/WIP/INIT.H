@@ -5,7 +5,7 @@ typedef struct {
 	unsigned bp, di, si, ds, es;
 	unsigned dx, cx, bx, ax;
 	unsigned ip, cs, flags;
-} context;
+} Regs_Int;
 
 typedef enum {
 	READY, 
@@ -13,23 +13,22 @@ typedef enum {
 } process_states;
 
 typedef struct {
-	unsigned int   id;
-	process_states state;
-	unsigned       ss;
-	unsigned       sp;
-	char           stack[STACK_SIZE];
-	unsigned       next;
-	unsigned       prev;
-} pcb;
+	unsigned id;
+	unsigned DirSeg;
+	unsigned DirOff;
+	unsigned status;
+	unsigned sp;
+	unsigned ss;
+	unsigned priority;
+	char     stack[STACK_SIZE];
+//	process_states state;
+} PCB;
 
 typedef void (*TareaPtr)();
 
-extern pcb pcbs[10];
-extern int g_iActualProcess;
-extern int g_iNumProcesses;
+extern PCB DD[10];
 
-//void init_process(void (*process)(void), unsigned int id);
-void init_process(TareaPtr Tarea, unsigned id);
+void init_process(void (*process)(void), unsigned int id);
 
 // Nuevo ///////////////////////////////////////////////////////////////////////
 extern void interrupt (*old_clock)();

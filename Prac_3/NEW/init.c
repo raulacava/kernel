@@ -21,8 +21,8 @@ PCB DD[10];
 
 void init_pcb(void (*process)(), int id) {
 	Regs_Int *r;
-
 	r = (Regs_Int *) DD[id].stck + 1024 - sizeof(Regs_Int);
+
 	DD[id].id = id;
 	DD[id].priority = 0;
 	DD[id].sp = FP_OFF((Regs_Int far *) r); // CHECK
