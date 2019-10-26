@@ -5,7 +5,7 @@
 int main() {
 	int i;
 	int p = 9;
-	clrscr();
+//	clrscr();
 	printf("Hello World!\n");
 
 	mostrar();

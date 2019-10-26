@@ -28,6 +28,7 @@ void init_process(void (*process)(void), unsigned id) {
 	r->flags = 0x20;
 
 	add_to_queue(id);
+//	meter_colas_listos(id);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

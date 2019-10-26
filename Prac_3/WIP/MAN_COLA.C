@@ -1,13 +1,13 @@
 #include "MAN_COLA.H"
 
-// meter_colas_listos(ID);
-void InsertaListos(Task *Tarea) {
-	add_to_queue(Tarea->Este);
-}
-
 void add_to_queue(int id) {
 	g_tail++;
 	Cola_Procesos[g_tail] = id;
+}
+
+// meter_colas_listos(ID);
+void InsertaListos(Task *Tarea) {
+	add_to_queue(Tarea->Este);
 }
 
 // primero_colas_listos();

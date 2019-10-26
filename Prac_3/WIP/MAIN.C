@@ -9,6 +9,7 @@
 #include "DATOS.H"
 
 int main() {
+	unsigned temp = 1;
 	clrscr();
 
 	init_process(&proc1, 1);
@@ -17,13 +18,10 @@ int main() {
 	init_process(&proc4, 4);
 
 	init_system();
-	//	old_clock = getvect(CLK_INT);
-	//	setvect(CLK_INT, context_switch);
 
-	while(1);
+	while(temp);
 
 	term_system();
-	//	setvect(CLK_INT, old_clock);
 
 	printf("Press any key to exit.\n");
 	getch();

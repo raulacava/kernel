@@ -1,4 +1,4 @@
-#include "datos.h"
+//#include "datos.h"
 
 int cola[10];
 int total = 0;

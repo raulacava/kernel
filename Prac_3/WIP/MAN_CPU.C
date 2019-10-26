@@ -15,5 +15,6 @@ void interrupt context_switch() {
 	_SS = DD[PtrRun->Este].ss;
 	_SP = DD[PtrRun->Este].sp;
 	(*old_clock)();
+
 	enable();
 }
