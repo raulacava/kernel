@@ -1,6 +1,7 @@
 #include <CONIO.H>
 #include <DOS.H>
-#include "PROC0.H"
+
+#define ESC 27
 
 void proc1() {
 	int x, y;
@@ -16,14 +17,11 @@ void proc1() {
 	// clrscr();
 	x = xo + 1;
 	y = yo + 1;
-	while (infty) {
+	while (key != ESC) {
 		key = getch();
-		if (key == ESC) {
-			isOn = 0;
-			infty  = 0;
-		}
-		disable(); gotoxy(x, y);
-		disable(); putch(key);
+		disable();
+		gotoxy(x, y);
+		putch(key);
 		enable();
 		if (x++ >= xo + initial_info.screenwidth/2) {
 			x = xo + 1;

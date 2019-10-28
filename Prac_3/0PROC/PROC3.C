@@ -1,7 +1,8 @@
 #include <CONIO.H>
 #include <STDIO.H>
 #include <DOS.H>
-#include "PROC0.H"
+
+#define ESC 27
 
 void proc3() {
 	struct text_info initial_info;
@@ -18,12 +19,8 @@ void proc3() {
 	y = initial_info.screenheight/4;
 
 	// clrscr();
-	while (infty) {
+	while (key != ESC) {
 		if (kbhit()) key = getch();
-		if (key == ESC) {
-			isOn = 0;
-			infty  = 0;
-		}
 		//genera un numero aleatorio
 		a = (int)((rand()/32767.1)*100);
 		b = 20+(int)((rand()/3276.1)*11);
