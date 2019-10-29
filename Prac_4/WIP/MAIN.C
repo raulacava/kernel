@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "PRISEM.H"
 #include "INIT.H"
 #include "PROC0.H"
 #include "MAN_COLA.H"

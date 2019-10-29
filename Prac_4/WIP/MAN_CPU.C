@@ -11,18 +11,19 @@ void interrupt context_switch() {
 
 //	pushes(_SS, _SP);
 	if (f) {
-		DD[cola[indice]].ss = _SS;
-		DD[cola[indice]].sp = _SP;
+		DD[curr].ss = _SS;
+		DD[curr].sp = _SP;
 	}
 	else f = 1;
 
+	// siguiente en la cola
 	primero_cola_listos();
 
 	(*old_clock)();
 
 //	popes();
- 	_SS = DD[cola[indice]].ss;
- 	_SP = DD[cola[indice]].sp;
+ 	_SS = DD[next].ss;
+ 	_SP = DD[next].sp;
 
 //	disable(); gotoxy((cuenta++%79)+1, 25);
 //	disable(); gotoxy(1, 25);

@@ -13,9 +13,11 @@ void sacar_cola_listos(int id) {
 		}
 	}
 	total--;
-	f = 0;
+//	f = 0;
 }
 
-int primero_cola_listos() {
-	return indice = ++indice % total;
+void primero_cola_listos() {
+	indice = ++indice % total;
+	next = cola[indice];
+	curr = next;
 }

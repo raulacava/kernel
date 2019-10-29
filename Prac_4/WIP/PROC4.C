@@ -10,7 +10,6 @@ void proc4() {
 	char key;
 	unsigned char s = 60;
 	int p = 4;
-	int works = 0;
 
 	gettextinfo(&initial_info);
 	xo = p == 1 || p == 3 ? 0 : initial_info.screenwidth /2;

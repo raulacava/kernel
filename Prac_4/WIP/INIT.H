@@ -32,6 +32,8 @@ void init_pcb(void (*process)(void), int id);
 void activa(void (*process)(), int id);
 void elimina(int id);
 
+extern int f;
+
 extern void interrupt (*old_clock)();
 void init_system();
 void term_system();
