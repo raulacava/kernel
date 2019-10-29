@@ -53,7 +53,7 @@ void activa(void (*process)(), int id) {
 void elimina(int id) {
 	disable();
 	sacar_cola_listos(id);
-	f = 0;
+//	f = 0;
 	context_switch();
 	enable();
 }

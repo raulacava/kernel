@@ -1,9 +1,12 @@
+#include <DOS.H>
+#include "MAN_COLA.H"
+#include "MAN_CPU.H"
 #include "PRISEM.H"
 
 void wait (int id) {
 	disable();
-	s[id].valor--;
-	if(s[id].valor < 0){
+	sem--;
+	if(sem < 0) {
 		sacar_cola_listos(id);
 		meter_cola_semaforo(id);
 		context_switch();
@@ -13,17 +16,19 @@ void wait (int id) {
 
 void signal(int id) {
 	disable();
-	s[id].valor++;
-	if(s[id].valor<=0){
+	sem++;
+	if(sem <= 0) {
 		sacar_cola_semaforo(id);
-		meter_cola_listo(id);
-		cambio_contexto();
+		meter_cola_listos(id);
+		context_switch();
 	}
 	enable();
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 void init_cola_semaforo() {
-	colaSem[10];
+//	colaSem[10] = {0,0,0,0,0,0,0,0,0,0};
 }
 
 void init_semaforo(int cont){

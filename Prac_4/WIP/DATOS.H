@@ -25,6 +25,5 @@ int colaSem[10];
 int totalSem = 0;
 int indiceSem = -1;
 int f2;
-
-int sem;
+int sem = 1;
 

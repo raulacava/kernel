@@ -1,5 +1,6 @@
 #include <DOS.H>
 #include "PROC0.H"
+#include "PRISEM.H"
 
 void proc0() {
 	int infty = 1;
@@ -10,7 +11,9 @@ void proc0() {
 //	activa(&proc4, 4);
 	activa(&proc5, 5);
 	activa(&proc6, 6);
-    init_semaforo(1,1)
+
+//	init_semaforo(1);
+
 	elimina(0);
 
 	while (infty);

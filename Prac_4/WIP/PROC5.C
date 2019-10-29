@@ -1,5 +1,6 @@
 // Escritor
 #include <CONIO.H>
+#include <DOS.H>
 #include "PROC0.H"
 #include "PRISEM.H"
 
@@ -19,15 +20,17 @@ void proc5() {
 	y = yo + 1;
 
 	for (i = 0; i < 10 ;i++) {
-//		wait(0);
-		var_global[i] = A[i];
-		gotoxy(x + 3 * i, y);     printf("%2d", A[i]);          delay(500);
-//		gotoxy(x + 3 * i, y +1 ); printf("%2d", var_global[i]); delay(500);
-//		signal(0);
+		wait(5);
+		disable(); var_global[i] = A[i];
+		disable(); gotoxy(x + 3 * i, y);
+		disable(); printf("%2d\n%2d", A[i], var_global[i]);
+		enable();  delay(250);
+		signal(5);
 	}
 
 	while (1) {
-		gotoxy(x, y + 11);
-		printf("Termino Escritor.");
+		disable(); gotoxy(x, y + 11);
+		disable(); printf("Termino Escritor.");
+		enable();
 	}
 }

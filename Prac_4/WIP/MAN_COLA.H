@@ -4,7 +4,7 @@ extern int indice;
 extern int curr;
 extern int next;
 
-//extern int f;
+extern int f;
 
 void meter_cola_listos(int);
 void sacar_cola_listos(int);

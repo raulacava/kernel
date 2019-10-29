@@ -25,9 +25,9 @@ void interrupt context_switch() {
  	_SS = DD[next].ss;
  	_SP = DD[next].sp;
 
-//	disable(); gotoxy((cuenta++%79)+1, 25);
+	disable(); gotoxy((cuenta++%79)+1, 25);
 //	disable(); gotoxy(1, 25);
-//	disable(); printf("%d", isOn);
+	disable(); printf("%d", next);
 	enable();
 }
 

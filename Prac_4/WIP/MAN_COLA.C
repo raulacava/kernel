@@ -13,7 +13,7 @@ void sacar_cola_listos(int id) {
 		}
 	}
 	total--;
-//	f = 0;
+	f = 0;
 }
 
 void primero_cola_listos() {
