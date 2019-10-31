@@ -24,7 +24,7 @@ void proc6() {
 		disable(); B[i] = var_global[i];
 		disable(); gotoxy(x + 3 * i, y);
 		disable(); printf("%2d", B[i]);
-		enable();  delay(250);
+		enable();  delay(2000);
 		signal();
 	}
 

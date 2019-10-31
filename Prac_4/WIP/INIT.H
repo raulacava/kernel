@@ -30,7 +30,7 @@ void init_pcb(void (*process)(void), int id);
 
 // Nuevo ///////////////////////////////////////////////////////////////////////
 void activa(void (*process)(), int id);
-void elimina(int id);
+void elimina(int);
 
 //extern int f;
 

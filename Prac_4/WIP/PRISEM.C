@@ -15,7 +15,7 @@ void wait (void) {
 	sem--;
 	if(sem < 0) {
 		sacar_cola_listos(curr);
-		printf("_push_cola_sem: %d\n", curr);
+	//	printf("_push_cola_sem: %d\n", curr);
 		push(&first, &last, curr);//meter a cola semaforos
 	//	printf("_pop_cola_sem: %d\n",pop(&first,&last));
 		context_switch();
@@ -29,8 +29,8 @@ void signal(void) {
 	sem++;
 	if(sem <= 0) {
 		p = pop(&first,&last);// sacar de la cola de semaforos
-		printf("_pop_cola_sem: %d\n", p);
-		//meter_cola_listos(curr);
+	//	printf("_pop_cola_sem: %d\n", p);
+		meter_cola_listos(p);
 		context_switch();
 	}
 	enable();

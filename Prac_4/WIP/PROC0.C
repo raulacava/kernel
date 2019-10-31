@@ -13,6 +13,7 @@ void proc0() {
 	activa(&proc6, 6);
 
 //	init_semaforo(1);
+	f = 0;
 
 	elimina(0);
 

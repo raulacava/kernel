@@ -1,5 +1,6 @@
 #ifndef PROC0_H
 #define PROC0_H
+extern int f;
 
 #define ESC 27 // Tecla de salida
 
