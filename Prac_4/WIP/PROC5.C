@@ -20,12 +20,12 @@ void proc5() {
 	y = yo + 1;
 
 	for (i = 0; i < 10 ;i++) {
-		wait(5);
+		wait();
 		disable(); var_global[i] = A[i];
 		disable(); gotoxy(x + 3 * i, y);
 		disable(); printf("%2d\n%2d", A[i], var_global[i]);
 		enable();  delay(250);
-		signal(5);
+		signal();
 	}
 
 	while (1) {

@@ -1,5 +1,7 @@
 #include "MAN_COLA.H"
 
+
+
 void meter_cola_listos(int id) {
 	cola[total++] = id;
 }

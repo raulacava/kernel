@@ -1,32 +1,44 @@
 #include <DOS.H>
+#include <stdio.h>
+#include <stdlib.h>
 #include "MAN_COLA.H"
 #include "MAN_CPU.H"
 #include "PRISEM.H"
+#include "queue.h"
 
-void wait (int id) {
+queueS first = NULL;
+queueS last = NULL;
+
+
+void wait (void) {
 	disable();
 	sem--;
 	if(sem < 0) {
-		sacar_cola_listos(id);
-		meter_cola_semaforo(id);
+		sacar_cola_listos(curr);
+		printf("_push_cola_sem: %d\n", curr);
+		push(&first, &last, curr);//meter a cola semaforos
+	//	printf("_pop_cola_sem: %d\n",pop(&first,&last));
 		context_switch();
 	}
 	enable();
 }
 
-void signal(int id) {
+void signal(void) {
+	int p=255;
 	disable();
 	sem++;
 	if(sem <= 0) {
-		sacar_cola_semaforo(id);
-		meter_cola_listos(id);
+		p = pop(&first,&last);// sacar de la cola de semaforos
+		printf("_pop_cola_sem: %d\n", p);
+		//meter_cola_listos(curr);
 		context_switch();
 	}
 	enable();
 }
 
-////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////
+/*
 void init_cola_semaforo() {
 //	colaSem[10] = {0,0,0,0,0,0,0,0,0,0};
 }
@@ -50,3 +62,4 @@ void sacar_cola_semaforo(int id) {
 void meter_cola_semaforo(int id) {
 	colaSem[totalSem++] = id;
 }
+*/
