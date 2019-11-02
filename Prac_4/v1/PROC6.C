@@ -21,12 +21,12 @@ void proc6() {
 	y = yo + 1;
 
 	for (i = 0; i < 10 ;i++) {
-		wait(6);
+		wait();
 		disable(); B[i] = var_global[i];
 		disable(); gotoxy(x + 3 * i, y);
 		disable(); printf("%2d", B[i]);
-		enable();  delay(250);
-		signal(6);
+		enable();  delay(1000);
+		signal();
 	}
 //	while (1) {
 		disable(); gotoxy(x, y + 11);
