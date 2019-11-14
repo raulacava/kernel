@@ -1,15 +1,17 @@
-// Escritor
+// Envia
 #include <CONIO.H>
 #include <DOS.H>
+#include <STRING.H>
 #include "PROC0.H"
 #include "PRISEM.H"
 
-void proc5() {
+void proc7() {
 	struct text_info initial_info;
 	int xo, yo;
 	int x, y;
+	char msj[10][20] = {'m0','m1','m2','m3','m4','m5','m6','m7','m8','m9'};
+//	string msj[10] = {"m0","m1","m2","m3","m4","m5","m6","m7","m8","m9"};
 	int i;
-	int A[10] = {1,2,3,5,7,11,13,17,19,23};
 	int p = 3;
 
 	gettextinfo(&initial_info);
@@ -20,17 +22,12 @@ void proc5() {
 	y = yo + 1;
 
 	for (i = 0; i < 10 ;i++) {
-		wait();
-		disable(); var_global[i] = A[i];
-		disable(); gotoxy(x + 3 * i, y);
-		disable(); printf("%2d\n%2d", A[i], var_global[i]);
-		enable();  delay(2000);
-		signal();
+		disable();
+		gotoxy(x + 3 * i, y);
+		printf("%s\n%d", msj[i], x + 3 * i);
+		enable();
 	}
 
 	while (1) {
-		disable(); gotoxy(x, y + 11);
-		disable(); printf("Termino Escritor.");
-		enable();
 	}
 }

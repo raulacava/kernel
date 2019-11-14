@@ -7,6 +7,7 @@
 #include "PROC0.H"
 #include "MAN_COLA.H"
 #include "MAN_CPU.H"
+#include "MAN_BUZ.H"
 #include "DATOS.H"
 
 int main() {

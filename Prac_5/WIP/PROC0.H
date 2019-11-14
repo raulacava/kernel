@@ -15,5 +15,7 @@ void proc3();
 void proc4();
 void proc5();
 void proc6();
+void proc7();
+void proc8();
 
 #endif

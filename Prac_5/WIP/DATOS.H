@@ -27,3 +27,10 @@ int indiceSem = -1;
 int f2;
 int sem = 1;
 
+// PRIBUZ.H
+buzz buzzon[BUZZON_LENGTH];
+int buzon_lleno = 0; //bandera de buffer lleno
+int buzon_vacio = 0; //bandera de buffer vacio
+int primer_msj=0;
+int ultimo_msj=0;
+int num_mensajes=0;
